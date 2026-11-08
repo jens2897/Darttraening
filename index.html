@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#101820">
+<meta name="description" content="Darttræning med 20-, 19- og 18-feltet.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Darttræning – 20-feltet</title>
+<style>
+:root{color-scheme:dark;--bg:#101820;--panel:#1b2833;--panel2:#243541;--line:#3b4d59;--text:#f4f7f9;--muted:#aebdc7;--accent:#e7b84b;--green:#63c69a;--red:#e17c79}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;touch-action:manipulation}
+body{padding:12px}.app{max-width:1100px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.brand{font-weight:800;font-size:clamp(20px,3vw,30px);letter-spacing:.2px}.sub{font-size:12px;color:var(--muted)}button,select,input{font:inherit}button{border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:12px 14px;font-weight:700;cursor:pointer;min-height:48px}button:active{transform:scale(.98);filter:brightness(1.2)}button:disabled{opacity:.35;cursor:not-allowed}.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button{min-height:42px;padding:8px 18px}.tabs button.active,.primary{background:var(--accent);color:#17212a;border-color:var(--accent)}.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.85fr);gap:12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;min-width:0}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.controls label{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}select,input{background:#101a22;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px;min-height:42px}.scoreline{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}.metric{background:#111d26;border-radius:12px;padding:10px;text-align:center}.metric strong{display:block;font-size:clamp(22px,4vw,32px);font-variant-numeric:tabular-nums}.metric span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}.progress{height:9px;background:#0d151c;border-radius:10px;overflow:hidden;margin:8px 0 14px}.progress>div{height:100%;background:var(--green);width:0%;transition:width .2s}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.hit{min-height:76px;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:8px 4px}.hit .main{font-size:clamp(18px,3vw,25px);line-height:1.1}.hit small{font-size:11px;color:inherit;opacity:.75;font-weight:600}.hit.target{background:#344b3e;border-color:#5c9977}.hit.neighbor{background:#493438;border-color:#89575a}.hit.triple{outline:2px solid var(--accent);outline-offset:-4px}.hit:disabled{filter:grayscale(1)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button{flex:1}.side h2,.section h2{font-size:17px;margin:0 0 10px}.side{display:flex;flex-direction:column;gap:12px}.list{display:flex;flex-direction:column;gap:7px}.statrow{display:grid;grid-template-columns:minmax(0,1fr) 42px 48px;gap:8px;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid #30404a}.statrow .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.statrow b{text-align:right;font-variant-numeric:tabular-nums}.muted{color:var(--muted)}.notice{padding:10px;border-radius:10px;background:#263d32;color:#c9f0dc;font-weight:700;text-align:center;margin-top:10px}.hidden{display:none!important}.section{margin-top:14px}.history-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.history-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}.history-item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#111d26;border-radius:11px;padding:10px}.history-item strong{display:block}.history-item small{color:var(--muted)}.history-item .right{text-align:right}.history-item .right b{display:block;font-size:19px}.history-item button{min-height:36px;padding:6px 10px;font-size:12px;margin-top:5px}.chartwrap{height:210px;background:#111d26;border-radius:12px;padding:8px;margin-top:10px}.chartwrap canvas{width:100%;height:100%}.foot{font-size:11px;color:var(--muted);text-align:center;margin:16px 0 5px}.modal{position:fixed;inset:0;background:#000a;display:grid;place-items:center;padding:16px;z-index:5}.modalbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;max-width:440px;width:100%}.modalbox h2{margin-top:0}.modalbox p{color:var(--muted)}.modalbox .actions{margin-top:16px}
+@media(max-width:760px){body{padding:8px}.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.panel{padding:11px}.hit{min-height:66px}.brand{font-size:20px}.top{align-items:flex-start}.sub{display:none}}
+@media(max-width:430px){.side{grid-template-columns:1fr}.hit{min-height:60px}.top{flex-direction:column}.scoreline{gap:5px}.metric{padding:8px 4px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div><div class="brand">🎯 Darttræning – 20-feltet</div><div class="sub">Træn præcision · Følg din udvikling</div></div><div class="tabs"><button id="tabTrain" class="active">Træning</button><button id="tabHistory">Historik & udvikling</button></div></header>
+<main id="trainView">
+<div class="layout">
+<section class="panel">
+<div class="controls">
+<label>Træningsfelt <select id="field"><option value="20">20-feltet</option><option value="19">19-feltet</option><option value="18">18-feltet</option></select></label>
+<label>Antal kast <input id="target" type="number" min="1" max="9999" step="1" value="100" style="width:86px"></label>
+<button class="primary" id="startBtn">Start ny træning</button>
+</div>
+<div class="scoreline">
+<div class="metric"><strong id="count">0/100</strong><span>Kast</span></div>
+<div class="metric"><strong id="points">0</strong><span>Point</span></div>
+<div class="metric"><strong id="remaining">100</strong><span>Tilbage</span></div>
+</div>
+<div class="progress"><div id="bar"></div></div>
+<div class="grid" id="hitGrid"></div>
+<div class="actions">
+<button id="undoBtn" disabled>↶ Fortryd sidste</button>
+<button id="finishBtn" disabled>Afslut træning</button>
+<button id="resetBtn">Nulstil</button>
+</div>
+<div id="notice" class="notice hidden"></div>
+</section>
+<aside class="side">
+<section class="panel"><h2>Resultatfordeling</h2><div id="stats" class="list"></div></section>
+<section class="panel"><h2>Pointregler</h2><div class="list">
+<div class="statrow"><span class="name">Triple i træningsfeltet</span><b>+3</b><span class="muted">point</span></div>
+<div class="statrow"><span class="name">Single i træningsfeltet</span><b>+1</b><span class="muted">point</span></div>
+<div class="statrow"><span class="name">Alle nabofelter</span><b>−1</b><span class="muted">point</span></div>
+</div><p class="muted" style="font-size:12px;margin-bottom:0">Hvert tryk registrerer én pil. Alle ni kategorier tælles hver for sig.</p></section>
+</aside>
+</div>
+</main>
+<main id="historyView" class="hidden">
+<section class="panel section">
+<div class="history-head"><div><h2 style="margin:0">Træningshistorik</h2><div class="muted" style="font-size:12px">Dine træninger gemmes på denne enhed.</div></div><div class="actions" style="margin:0"><button id="csvBtn">Eksportér CSV</button><button id="clearHistoryBtn">Slet historik</button></div></div>
+<div id="historyList" class="history-list"></div>
+</section>
+<section class="panel section"><h2>Udvikling</h2><label class="muted" style="font-size:13px">Vis statistik <select id="chartMetric"><option value="triple">Triple i træningsfeltet</option><option value="single">Single i træningsfeltet</option><option value="neighbor">Nabofelter (fejl)</option><option value="overunder">Over- og undertræffere</option><option value="points">Pointscore</option></select></label><div class="chartwrap"><canvas id="chart"></canvas></div><div class="muted" style="font-size:12px;margin-top:8px">Grafen viser de seneste 20 træninger.</div></section>
+</main>
+<div class="foot">Version 1.0 · Data gemmes kun lokalt på din tablet</div>
+</div>
+<div id="modal" class="modal hidden"><div class="modalbox"><h2 id="modalTitle">Træning afsluttet</h2><p id="modalText"></p><div class="actions"><button id="modalClose" class="primary">OK</button></div></div></div>
+<script src="app.js"></script>
+</body></html>

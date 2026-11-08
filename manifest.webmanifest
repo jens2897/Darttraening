@@ -1,0 +1,23 @@
+{
+  "name": "Darttræning – 20-feltet",
+  "short_name": "Darttræning",
+  "description": "Træn 20-, 19- og 18-feltet og følg din udvikling.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#101820",
+  "theme_color": "#101820",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
