@@ -12,11 +12,10 @@ function counts(){return definitions[field].map((d,i)=>throws.filter(x=>x===i).l
 function score(){return throws.reduce((s,i)=>s+definitions[field][i][3],0)}
 function pct(n){return throws.length?Math.round(n/throws.length*100):0}
 function visualOrder(){
- // Vis knapperne i tre lodrette kolonner: over, triple, under.
- // Venstre/højre følger nabofelternes placering på dartskiven.
- if(field==='20') return [3,4,5, 0,1,2, 6,7,8]; // 5 | 20 | 1
- if(field==='19') return [6,7,8, 0,1,2, 3,4,5]; // 3 | 19 | 7
- return [3,4,5, 0,1,2, 6,7,8]; // 1 | 18 | 4
+ // Rækkevis rækkefølge: over, triple, under.
+ if(field==='20') return [3,1,6, 4,0,7, 5,2,8]; // 5 | 20 | 1
+ if(field==='19') return [6,1,3, 7,0,4, 8,2,5]; // 3 | 19 | 7
+ return [3,1,6, 4,0,7, 5,2,8]; // 1 | 18 | 4
 }
 function renderGrid(){
  $('hitGrid').innerHTML='';
@@ -24,6 +23,7 @@ function renderGrid(){
   const d=definitions[field][i];
   const b=document.createElement('button');b.className='hit '+(d[2]==='neighbor'?'neighbor':'target')+(d[2]==='triple'?' triple':'');
   b.innerHTML=`<span class="main">${d[0]}</span><small>${d[3]>0?'+'+d[3]:d[3]} point · <span id="hitcount${i}">0</span></small>`;
+  b.dataset.index=i;
   b.disabled=!active||throws.length>=target;b.addEventListener('click',()=>addThrow(i));$('hitGrid').appendChild(b);
  });
 }
@@ -31,7 +31,7 @@ function render(){
  const c=counts();$('count').textContent=`${throws.length}/${target}`;$('points').textContent=score();$('remaining').textContent=Math.max(0,target-throws.length);$('bar').style.width=Math.min(100,throws.length/target*100)+'%';
  $('stats').innerHTML='';
  definitions[field].forEach((d,i)=>{const row=document.createElement('div');row.className='statrow';row.innerHTML=`<span class="name" title="${d[0]}">${d[0]}</span><b>${c[i]}</b><span class="muted">${pct(c[i])}%</span>`;$('stats').appendChild(row);});
- [...$('hitGrid').children].forEach((b,i)=>{b.disabled=!active||throws.length>=target;b.querySelector('small').innerHTML=`${definitions[field][i][3]>0?'+'+definitions[field][i][3]:definitions[field][i][3]} point · ${c[i]} stk.`});
+[...$('hitGrid').children].forEach(b=>{const i=Number(b.dataset.index);b.disabled=!active||throws.length>=target;b.querySelector('small').innerHTML=`${definitions[field][i][3]>0?'+'+definitions[field][i][3]:definitions[field][i][3]} point · ${c[i]} stk.`});
  $('undoBtn').disabled=!active||throws.length===0;$('finishBtn').disabled=!active;$('field').disabled=active;$('target').disabled=active;
  $('notice').classList.toggle('hidden',!(active&&throws.length>=target));
  if(active&&throws.length>=target){$('notice').textContent='🎉 Målet er nået! Træningen er gemt.';finishSession(true)}
