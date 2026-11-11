@@ -18,7 +18,7 @@ body{padding:12px}.app{max-width:1100px;margin:auto}.top{display:flex;align-item
 </head>
 <body>
 <div class="app">
-<header class="top"><div><div class="brand">🎯 Darttræning – 20-feltet</div><div class="sub">Træn præcision · Følg din udvikling</div></div><div class="tabs"><button id="tabTrain" class="active">Træning</button><button id="tabHistory">Historik & udvikling</button></div></header>
+<header class="top"><div><div class="brand">🎯 Darttræning – 20-feltet</div><div class="sub">Træn præcision · Følg din udvikling</div></div><div class="tabs"><button id="tabTrain" class="active">Træning</button><button id="tabHistory">Historik & udvikling</button><button id="tabStats">Statistik</button></div></header>
 <main id="trainView">
 <div class="layout">
 <section class="panel">
@@ -29,10 +29,10 @@ body{padding:12px}.app{max-width:1100px;margin:auto}.top{display:flex;align-item
 </div>
 <div class="scoreline">
 <div class="metric"><strong id="count">0/100</strong><span>Kast</span></div>
-<div class="metric"><strong id="points">0</strong><span>Point</span></div>
+<div class="metric"><strong id="points">0</strong><span>Træningspoint</span></div>
 <div class="metric"><strong id="remaining">100</strong><span>Tilbage</span></div>
 </div>
-<div class="progress"><div id="bar"></div></div>
+<div class="scoreline"><div class="metric"><strong id="rawPoints">0</strong><span>Rigtige dartpoint</span></div><div class="metric"><strong id="average1">0,00</strong><span>Snit pr. pil</span></div><div class="metric"><strong id="average3">0,00</strong><span>Snit pr. 3 pile</span></div></div><div class="progress"><div id="bar"></div></div>
 <div class="grid" id="hitGrid"></div>
 <div class="actions">
 <button id="undoBtn" disabled>↶ Fortryd sidste</button>
@@ -56,10 +56,21 @@ body{padding:12px}.app{max-width:1100px;margin:auto}.top{display:flex;align-item
 <div class="history-head"><div><h2 style="margin:0">Træningshistorik</h2><div class="muted" style="font-size:12px">Dine træninger gemmes på denne enhed.</div></div><div class="actions" style="margin:0"><button id="csvBtn">Eksportér CSV</button><button id="clearHistoryBtn">Slet historik</button></div></div>
 <div id="historyList" class="history-list"></div>
 </section>
-<section class="panel section"><h2>Udvikling</h2><label class="muted" style="font-size:13px">Vis statistik <select id="chartMetric"><option value="triple">Triple i træningsfeltet</option><option value="single">Single i træningsfeltet</option><option value="neighbor">Nabofelter (fejl)</option><option value="overunder">Over- og undertræffere</option><option value="points">Pointscore</option></select></label><div class="chartwrap"><canvas id="chart"></canvas></div><div class="muted" style="font-size:12px;margin-top:8px">Grafen viser de seneste 20 træninger.</div></section>
+<section class="panel section"><h2>Udvikling</h2><label class="muted" style="font-size:13px">Vis statistik <select id="chartMetric"><option value="triple">Triple i træningsfeltet</option><option value="single">Single i træningsfeltet</option><option value="neighbor">Nabofelter (fejl)</option><option value="overunder">Over- og undertræffere</option><option value="raw">Samlet rigtig score</option><option value="average">Gennemsnit pr. 3 pile</option><option value="points">Træningspoint</option></select></label><div class="chartwrap"><canvas id="chart"></canvas></div><div class="muted" style="font-size:12px;margin-top:8px">Grafen viser de seneste 20 træninger.</div></section>
 </main>
-<div class="foot">Version 1.0 · Data gemmes kun lokalt på din tablet</div>
+<main id="statsView" class="hidden">
+<section class="panel section">
+ <div class="history-head"><div><h2 style="margin:0">Statistik efter træningen</h2><div class="muted" style="font-size:12px">Vælg felt for at sammenligne dine træninger.</div></div><label class="muted">Træningsfelt <select id="statsField"><option value="20">20-feltet</option><option value="19">19-feltet</option><option value="18">18-feltet</option></select></label></div>
+ <div class="scoreline" style="margin-top:12px"><div class="metric"><strong id="overallScore">0</strong><span>Samlet rigtig score</span></div><div class="metric"><strong id="overallAverageDart">0,00</strong><span>Gennemsnit pr. pil</span></div><div class="metric"><strong id="overallAverage">0,00</strong><span>Gennemsnit pr. 3 pile</span></div></div><div class="muted" style="font-size:12px">Længste sammenhængende træfserie: <strong id="overallStreak">0</strong></div>
+</section>
+<div class="layout section">
+ <section class="panel"><h2>Træffere efter pilens placering</h2><div id="positionStats" class="list"></div><p class="muted" style="font-size:12px">Viser hvor ofte første, anden og tredje pil rammer træningsfeltet (single eller triple).</p></section>
+ <section class="panel"><h2>Træningsfeltet på stribe</h2><div id="streakCounts" class="muted"></div><p class="muted" style="font-size:12px">En single eller triple i det valgte træningsfelt tæller som træffer. Et kast uden for feltet bryder serien.</p></section>
 </div>
-<div id="modal" class="modal hidden"><div class="modalbox"><h2 id="modalTitle">Træning afsluttet</h2><p id="modalText"></p><div class="actions"><button id="modalClose" class="primary">OK</button></div></div></div>
+<section class="panel section"><div class="history-head"><h2 style="margin:0">Præcis fordeling af besøgsscorer</h2><label class="muted">Vis <select id="visitFilter"><option value="60">60 point og derover</option><option value="all">Alle scorer</option></select></label></div><div class="muted" style="font-size:12px;margin:8px 0">Hvert fuldt besøg på tre pile tælles for sig. Scorerne vises enkeltvis, sorteret fra højeste til laveste.</div><div id="visitDistribution" class="list"></div></section>
+</main>
+<div class="foot">Version 2.0 · Data gemmes kun lokalt på din enhed</div>
+</div>
+<div id="modal" class="modal hidden"><div class="modalbox"><h2 id="modalTitle">Træning afsluttet</h2><p id="modalText"></p><label for="sessionNote" class="muted" style="font-size:13px">Noter til træningen (valgfrit)</label><textarea id="sessionNote" rows="3" placeholder="Fx nye flights, stems eller hvordan pilene føltes..." style="width:100%;margin-top:6px;background:#101a22;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;font:inherit"></textarea><div class="actions"><button id="modalClose" class="primary">Gem notat og luk</button><button id="modalSkip">Luk uden notat</button></div></div></div>
 <script src="app.js"></script>
 </body></html>
